@@ -1,5 +1,5 @@
 % drawDisk - draws a solid disk into a 2d image.
-%
+function resultMap = drawCircle(bgMap,center,radius,value)
 % resultMap = drawDisk(bgMap,center,radius,value)
 %    Draws a solid disk with radius 'radius' around 'center'
 %    into the background map 'bgMap' and fills it
@@ -7,9 +7,10 @@
 %    Returns a map structure if bgMap is given as a map structure.
 %    Returns a 2d array if bgMap is given as a 2d array.
 
-
-
-function resultMap = drawCircle(bgMap,center,radius,value)
+% make sure radius is even
+if mod(radius, 2) == 1
+    radius = radius - 1;
+end
 
 if isstruct(bgMap)
   bg = bgMap.data;
@@ -69,8 +70,8 @@ if length(size(bgMap)) == 3
 else
     cutRes = result(tb:bb,lb:rb, 1);
     cutDisk = disk(td:bd,ld:rd);
-    cutRes(cutDisk) = value(1);
-    result(tb:bb,lb:rb) = cutRes;
+    cutRes(cutDisk) = cutRes(cutDisk) + value(1); % add values instead of overwriting
+    result(tb:bb,lb:rb) = cutRes; 
 end
 
 if isstruct(bgMap)

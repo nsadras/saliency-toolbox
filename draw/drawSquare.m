@@ -1,9 +1,10 @@
-% drawSquare - draws a solid disk into a 2d image.
-
-
-
-
 function resultMap = drawSquare(bgMap,center,radius,value)
+% drawSquare - draws a solid square into a 2d image.
+
+% make sure radius is even
+if mod(radius, 2) == 1
+    radius = radius - 1;
+end
 
 if isstruct(bgMap)
   bg = bgMap.data;
@@ -52,7 +53,7 @@ if length(size(bgMap)) == 3
     result(tb:bb,lb:rb,3) = cutResB;
 else
     cutRes = result(tb:bb,lb:rb, 1);
-    cutRes(:) = value(1);
+    cutRes(:) = cutRes(:) + value(1); % add values instead of overwriting
     result(tb:bb,lb:rb) = cutRes;
 end
 
